@@ -12,6 +12,7 @@ export default () => (
       <Cell
         source="print('hello')"
         outputs={[{ mimetype: "text/plain", data: "hello", key: "1234" }]}
+        className="explicit"
       />
       <Cell
         source={`from vdom import h1\nh1("👌🏻")`}
