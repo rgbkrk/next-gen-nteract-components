@@ -1,0 +1,14 @@
+[ignore]
+.*/node_modules/config-chain/test/broken.json.*
+.*/node_modules/npmconf/test/fixtures/package.json.*
+.*/node_modules/babel-plugin-transform-react-remove-prop-types/src/index.js.*
+
+[include]
+
+[libs]
+
+[lints]
+
+[options]
+
+[strict]

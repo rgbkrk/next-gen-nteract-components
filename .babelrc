@@ -1,0 +1,3 @@
+{
+  "presets": ["flow", "next/babel"]
+}
