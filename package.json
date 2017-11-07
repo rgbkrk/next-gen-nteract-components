@@ -14,7 +14,8 @@
     "@nteract/transforms": "^3.0.2",
     "next": "^4.1.4",
     "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react-dom": "^16.0.0",
+    "react-syntax-highlighter": "^5.8.0"
   },
   "devDependencies": {
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
