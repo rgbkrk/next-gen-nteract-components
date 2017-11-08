@@ -10,7 +10,7 @@ export default () => (
         <h1>Dashboard Demo</h1>
         <h2>Semi hokey implementation</h2>
       </header>
-      {notebook.cellOrder.map(cellID => {
+      {["abc", "gru", "gru", "abc"].map(cellID => {
         const cell = notebook.cells[cellID];
 
         return (
@@ -33,7 +33,7 @@ export default () => (
         width: 100%;
         display: grid;
         /* 2 columns left @ 164px wide - 1 column middle @ 1fr wide - 2 columns right @ 164px wide*/
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: repeat(2, 1fr);
         /* set vertical and horizontal gutters at 20px*/
         grid-gap: 20px;
       }
