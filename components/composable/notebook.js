@@ -416,7 +416,7 @@ const cells: Cells = {
       <img src="http://i.dailymail.co.uk/i/pix/2016/07/08/00/360EA41C00000578-3679510-image-m-4_1467934667802.jpg" />
     ),
     running: false,
-    queued: false,
+    queued: true,
     type: "code"
   },
   md2: {
