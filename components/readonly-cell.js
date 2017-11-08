@@ -2,12 +2,7 @@
 import React from "react";
 
 import SyntaxHighlighter from "react-syntax-highlighter";
-import {
-  docco,
-  dark,
-  idea,
-  rainbow
-} from "react-syntax-highlighter/dist/styles";
+import { idea } from "react-syntax-highlighter/dist/styles";
 
 type CellProps = {
   executionCount?: "*" | number | null,
@@ -48,7 +43,7 @@ export const Cell = (
       <div>
         {outputs ? (
           <div className="outputs">
-            {outputs.map(output => {
+            {outputs.map((output, index) => {
               switch (output.mimetype) {
                 case "text/plain":
                   return <pre key={output.key}>{output.data}</pre>;
@@ -56,7 +51,15 @@ export const Cell = (
                   return <pre key={output.key}>html here</pre>;
                 case "application/vdom.v1+json":
                   const { tagName, attributes, children } = output.data;
-                  return React.createElement(tagName, attributes, children);
+                  return React.createElement(
+                    tagName,
+                    Object.assign(
+                      {},
+                      { key: output.key ? output.key : index },
+                      attributes
+                    ),
+                    children
+                  );
                 default:
                   return null;
               }
@@ -76,6 +79,7 @@ export const Cell = (
           --cell-bg-hover: #eeedee;
           --cell-bg-focus: #e2dfe3;
           --cm-background: #fafafa;
+          --prompt-bg: var(--cm-background);
         }
 
         .cell {
@@ -151,7 +155,7 @@ export const Cell = (
           text-align: center;
 
           color: var(--input-color);
-          background-color: var(--pager-bg);
+          background-color: var(--prompt-bg);
 
           flex: 0 0 auto;
         }

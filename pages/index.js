@@ -6,6 +6,11 @@ export default () => (
       .cells > :global(*) {
         margin: 20px;
       }
+
+      .cells {
+        font-family: "Source Sans Pro", Helvetica Neue, Helvetica, Arial,
+          sans-serif;
+      }
     `}</style>
 
     <div className="cells">
@@ -25,7 +30,8 @@ export default () => (
               tagName: "h1",
               children: "👌🏻",
               attributes: {}
-            }
+            },
+            key: "2345"
           }
         ]}
       />
