@@ -308,41 +308,44 @@ const cells: Cells = {
   abc: {
     code: "from hogwarts import characters;\ndisplay(characters)",
     outputs: (
-      <table>
-        <thead>
-          <tr>
-            <th>id</th>
-            <th>name</th>
-            <th>bio</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>0</td>
-            <td>Regulus Arcturus Black</td>
-            <td>Brother of Sirius. Used to be a Death Eater but defected.</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>Sirius Black</td>
-            <td>Best friend of James Potter and godfather of Harry.</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Lavender Brown</td>
-            <td>
-              Killed by a werewolf. She was a gryffindor student who dated Ron.{" "}
-            </td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Cho Chang</td>
-            <td>
-              Ravenclaw student who dated Cedric Diggory and Harry Potter.
-            </td>
-          </tr>
-          <pre>... 60 more entries</pre>
-        </tbody>
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>name</th>
+              <th>bio</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>0</td>
+              <td>Regulus Arcturus Black</td>
+              <td>Brother of Sirius. Used to be a Death Eater but defected.</td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>Sirius Black</td>
+              <td>Best friend of James Potter and godfather of Harry.</td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Lavender Brown</td>
+              <td>
+                Killed by a werewolf. She was a gryffindor student who dated
+                Ron.{" "}
+              </td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Cho Chang</td>
+              <td>
+                Ravenclaw student who dated Cedric Diggory and Harry Potter.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p>... 60 more entries</p>
         <style jsx>{`
           /* This is how you can tell this is a hokey demo */
 
@@ -394,7 +397,7 @@ const cells: Cells = {
             vertical-align: middle;
           }
         `}</style>
-      </table>
+      </div>
     ),
     running: false,
     queued: false,
@@ -437,6 +440,20 @@ export const notebook = {
 
 export const Example = () => (
   <Notebook selected="bde">
+    <Cell>
+      <Input>
+        <Prompt />
+        <Editor>{"import wizardry\nwizardry.birthday()"}</Editor>
+      </Input>
+      <Outputs>
+        <img
+          src="https://i.ytimg.com/vi/YFNsRogBqb0/maxresdefault.jpg"
+          width="200"
+        />
+        <h2>yer a wizard harry</h2>
+      </Outputs>
+    </Cell>
+
     {cellOrder.map(cellID => {
       const cell: CellData = cells[cellID];
 
