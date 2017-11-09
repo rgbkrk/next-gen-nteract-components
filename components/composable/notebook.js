@@ -29,40 +29,40 @@ export class Outputs extends React.Component<OutputsProps> {
 }
 
 type PromptProps = {
-  counter?: number | null,
-  running?: boolean,
-  queued?: boolean
+  counter: number | null,
+  running: boolean,
+  queued: boolean
 };
 
 // Totally fake component for consistency with indents of the editor area
-class PromptBuffer extends React.Component<*> {
+export class PromptBuffer extends React.Component<*> {
   render() {
-    return null;
+    return <div className="prompt" />;
   }
 }
 
-class Prompt extends React.Component<PromptProps> {
+export function promptText(props: PromptProps) {
+  if (props.running) {
+    return "[*]";
+  }
+  if (props.queued) {
+    return "[…]";
+  }
+  if (typeof props.counter === "number") {
+    return `[${props.counter}]`;
+  }
+  return "[ ]";
+}
+
+export class Prompt extends React.Component<PromptProps> {
   static defaultProps = {
     counter: null,
     running: false,
     queued: false
   };
 
-  text = () => {
-    if (this.props.running) {
-      return "[*]";
-    }
-    if (this.props.queued) {
-      return "[…]";
-    }
-    if (typeof this.props.counter === "number") {
-      return `[${this.props.counter}]`;
-    }
-    return "[ ]";
-  };
-
   render() {
-    return this.text();
+    return <div className="prompt">{promptText(this.props)}</div>;
   }
 }
 
@@ -123,7 +123,7 @@ export class Input extends React.Component<InputProps> {
       switch (child.type) {
         case Prompt:
         case PromptBuffer:
-          return <div className="prompt">{child}</div>;
+          return React.cloneElement(child, { className: "prompt" });
         case Editor:
           return React.cloneElement(child, { className: "input" });
         default:
@@ -151,20 +151,20 @@ export const Cell = (props: { isSelected: boolean, children?: React$Node }) => {
       <style jsx>{`
         div {
           /* well this is neat, I can set the css variable inline */
-          --prompt-width: 50px;
-          --main-bg-color: white;
-          --main-fg-color: rgb(51, 51, 51);
-          --primary-border: #cbcbcb;
-          --cell-bg: white;
-          --cell-bg-hover: #eeedee;
-          --cell-bg-focus: #e2dfe3;
-          --cm-background: #fafafa;
-          --prompt-bg: var(--cm-background);
+          --default-prompt-width: 50px;
+          --default-main-bg-color: white;
+          --default-main-fg-color: rgb(51, 51, 51);
+          --default-primary-border: #cbcbcb;
+          --default-cell-bg: white;
+          --default-cell-bg-hover: #eeedee;
+          --default-cell-bg-focus: #e2dfe3;
+          --default-cm-background: #fafafa;
+          --default-prompt-bg: var(--default-cm-background);
         }
 
         .cell {
           position: relative;
-          background: var(--cell-bg);
+          background: var(--cell-bg, white);
           transition: all 0.1s ease-in-out;
         }
 
@@ -180,16 +180,16 @@ export const Cell = (props: { isSelected: boolean, children?: React$Node }) => {
 
         .cell:hover :global(.prompt),
         .cell:active :global(.prompt) {
-          background-color: var(--cell-bg-hover);
+          background-color: var(--cell-bg-hover, #eeedee);
         }
 
         .cell:focus :global(.prompt),
         .cell.focused :global(.prompt) {
-          background-color: var(--cell-bg-focus);
+          background-color: var(--cell-bg-focus, #e2dfe3);
         }
 
         .cell :global(.outputs) {
-          padding: 10px 10px 10px calc(var(--actual-prompt-width) + 10px);
+          padding: 10px 10px 10px calc(var(--prompt-width, 50px) + 10px);
         }
 
         .cell :global(.outputs pre) {
@@ -200,7 +200,7 @@ export const Cell = (props: { isSelected: boolean, children?: React$Node }) => {
 
         .cell :global(.outputs) {
           word-wrap: break-word;
-          padding: 10px 10px 10px calc(var(--prompt-width) + 10px);
+          padding: 10px 10px 10px calc(var(--prompt-width, 50px) + 10px);
           overflow-y: auto;
         }
 
@@ -227,13 +227,13 @@ export const Cell = (props: { isSelected: boolean, children?: React$Node }) => {
           font-family: monospace;
           font-size: 12px;
 
-          width: var(--prompt-width);
+          width: var(--prompt-width, 50px);
           padding: 9px 0;
 
           text-align: center;
 
-          color: var(--input-color);
-          background-color: var(--prompt-bg);
+          color: var(--input-color, black);
+          background-color: var(--prompt-bg, #fafafa);
 
           flex: 0 0 auto;
         }
@@ -241,7 +241,7 @@ export const Cell = (props: { isSelected: boolean, children?: React$Node }) => {
         .cell :global(.input) {
           flex: 1 1 auto;
           overflow: auto;
-          background-color: var(--cm-background);
+          background-color: var(--cm-background, #fafafa);
         }
       `}</style>
       {children}
@@ -441,20 +441,6 @@ export const notebook = {
 
 export const Example = () => (
   <Notebook selected="bde">
-    <Cell>
-      <Input>
-        <Prompt />
-        <Editor>{"import wizardry\nwizardry.birthday()"}</Editor>
-      </Input>
-      <Outputs>
-        <img
-          src="https://i.ytimg.com/vi/YFNsRogBqb0/maxresdefault.jpg"
-          width="200"
-        />
-        <h2>yer a wizard harry</h2>
-      </Outputs>
-    </Cell>
-
     {cellOrder.map(cellID => {
       const cell: CellData = cells[cellID];
 
