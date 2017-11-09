@@ -7,7 +7,7 @@ import { idea } from "react-syntax-highlighter/dist/styles";
 
 export const Output = () => <pre>I am output</pre>;
 
-type OutputsProps = {
+export type OutputsProps = {
   children: React$Node,
   className?: string,
   hidden: boolean
@@ -55,7 +55,7 @@ class Prompt extends React.Component<PromptProps> {
     if (this.props.queued) {
       return "[…]";
     }
-    if (this.props.counter !== null && this.props.counter !== undefined) {
+    if (typeof this.props.counter === "number") {
       return `[${this.props.counter}]`;
     }
     return "[ ]";
@@ -66,13 +66,13 @@ class Prompt extends React.Component<PromptProps> {
   }
 }
 
-type EditorProps = {
+export type EditorProps = {
   language: string,
   children: string | React$Element<any>,
   className?: string
 };
 
-class Editor extends React.Component<EditorProps> {
+export class Editor extends React.Component<EditorProps> {
   static defaultProps = {
     children: "",
     language: "python",
@@ -100,12 +100,12 @@ class Editor extends React.Component<EditorProps> {
   }
 }
 
-type InputProps = {
+export type InputProps = {
   children: React$Node,
   hidden: boolean
 };
 
-class Input extends React.Component<InputProps> {
+export class Input extends React.Component<InputProps> {
   static defaultProps = {
     children: null,
     hidden: false
@@ -277,6 +277,7 @@ export const Notebook = (props: { children: React$Node, selected: string }) => {
   );
 };
 
+/** These are fake cell types for the purposes of demonstration **/
 type CodeCell = {|
   code: string,
   outputs: any,
