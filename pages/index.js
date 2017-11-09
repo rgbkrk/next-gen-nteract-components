@@ -1,3 +1,3 @@
-import { Notebook } from "../components/readonly/notebook";
+import { Example } from "../components/composable/notebook";
 
-export default () => <Notebook />;
+export default () => <Example />;
